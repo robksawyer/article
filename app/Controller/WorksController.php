@@ -6,8 +6,6 @@ App::uses('AppController', 'Controller');
  * @property Work $Work
  */
 class WorksController extends AppController {
-
-	public $helpers = array('AddressFinder.AddressFinder');
 	
 /**
  * index method

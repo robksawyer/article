@@ -34,7 +34,6 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 	
 	public $theme = 'v1';
-	public $components = array('Session', 'Email', 'Cookie','RequestHandler');
-	public $helpers = array('Html', 'Form', 'Session','Number', 'Time', 'Text','Js' => array('Jquery'));
-	
+	public $components = array('Session', 'Email', 'Cookie','RequestHandler','Utils.Utils');
+	public $helpers = array('Html', 'Form', 'Session','Number', 'Time', 'Text','Js' => array('Jquery'),'Geography.Geography');
 }

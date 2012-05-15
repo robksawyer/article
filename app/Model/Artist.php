@@ -21,13 +21,24 @@ class Artist extends AppModel {
 		'fullname' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'You must enter the artist\'s name.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			)
 		),
+		'email' => array(
+			'required' => false,
+			'isValid' => array(
+				'rule' => 'email',
+				'message' => 'Please enter a valid email address.'
+			),
+			'isUnique' => array(
+				'rule' => array('isUnique','email'),
+				'message' => 'This email is already in use.'
+			)
+		)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

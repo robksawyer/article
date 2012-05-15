@@ -39,6 +39,29 @@ class ArtistsController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
+			//Clean up the Website URL
+			if(!empty($this->request->data['Artist']['url'])){
+				$this->request->data['Artist']['url'] = $this->Utils->addHttp($this->request->data['Artist']['url']);
+				//Make sure http:// isn't the only thing that exists.
+				if($this->request->data['Artist']['url'] == "http://"){
+					$this->request->data['Artist']['url'] = '';
+				}
+			}
+			
+			//Clean up the LinkedIn URL
+			if(!empty($this->request->data['Artist']['linkedin_url'])){
+				$this->request->data['Artist']['linkedin_url'] = $this->Utils->addHttp($this->request->data['Artist']['linkedin_url']);
+				//Make sure http:// isn't the only thing that exists.
+				if($this->request->data['Artist']['linkedin_url'] == "http://"){
+					$this->request->data['Artist']['linkedin_url'] = '';
+				}
+			}
+			
+			//Clear the @ sign if nothing else was entered.
+			$this->request->data['Artist']['twitter'] = trim($this->request->data['Artist']['twitter']);
+			if(strlen($this->request->data['Artist']['twitter']) == 1){
+				$this->request->data['Artist']['twitter'] = '';
+			}
 			$this->Artist->create();
 			if ($this->Artist->save($this->request->data)) {
 				$this->Session->setFlash(__('The artist has been saved'));
