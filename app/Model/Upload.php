@@ -22,14 +22,11 @@ class Upload extends AppModel {
 		),
 		'Uploader.FileValidation' => array(
 			'fileName' => array(
-						'required'	=> array(
-								'value' => false,
-								'error' => 'You must select a file first'
-						),
 						'extension'	=> array(
 								'value' => array(
 									'jpeg','jpg','png','tif','tiff','bmp','gif'
 								),
+								'required' => false,
 								'error' => 'You cannot upload this type of file.'
 						)
 						/*'filesize' => array(
@@ -39,19 +36,5 @@ class Upload extends AppModel {
 					)
 		)
 	);
-	
-/**
- * belongsTo associations
- *
- * @var array
- */
-	public $belongsTo = array(
-		'Work' => array(
-			'className' => 'Work',
-			'foreignKey' => 'work_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
+
 }

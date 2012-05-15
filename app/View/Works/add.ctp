@@ -11,10 +11,12 @@
 		if(!empty($upload)){
 			echo $this->Form->input('upload_id',array('type'=>'hidden'));
 			echo $this->Html->image($upload['Upload']['path'],array('width'=>'150px'));
-			echo $this->Form->input('Upload.fileName', array('type' => 'file','label'=>false,'before'=>'<div class="before">If you\'d like to change the image. Pick a new one below.</div>'));
+			echo $this->Form->input('Upload.fileName', array('type' => 'file','label'=>false,'before'=>'<div class="before">If you\'d like to change the image. Pick a new one below.</div>','after'=>'Maximum size of 10MB. jpg, jpeg, gif, png.','id'=>'attach-local','after'=>'<a href="javascript:return false;" onclick="uploadViaUrl();" class="use-url">Use a URL instead</a>'));
 		}else{
-			echo $this->Form->input('Upload.fileName', array('type' => 'file','label'=>false,'before'=>'<div class="before">Add an image of the work.</div>'));
+			echo $this->Form->input('Upload.fileName', array('type' => 'file','label'=>false,'before'=>'<div class="before">Add an image of the work.</div>','after'=>'Maximum size of 10MB. jpg, jpeg, gif, png.','id'=>'attach-local','after'=>'<a href="javascript:return false;" onclick="uploadViaUrl();" class="use-url">Use a URL instead</a>'));
 		}
+		echo $this->Form->input('Upload.url', array('type'=>'text','id'=>'attach-url','label'=>'Upload via URL'));
+		echo $this->Html->image('/img/icons/delete.gif',array('alt'=>'Cancel','url'=>'javascript:uploadViaLocal(); return false;','class'=>'cancel-url','title'=>'Cancel and add a local file.'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit'));?>
@@ -32,3 +34,39 @@
 		<li><?php echo $this->Html->link(__('New Upload'), array('controller' => 'uploads', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+	//Hide the add image by url field on load
+	$('#attach-url').hide();
+	$('#attach-url').parent().hide(); //Hide the label
+	$('img.cancel-url').hide();
+	
+});
+
+function uploadViaUrl(){
+	$('#attach-url').css({width:'95%',float:'left'});
+	$('img.cancel-url').show();
+	$('#attach-local').hide();
+	$('#attach-local').parent().hide(); //Hide the label
+	
+	$('.use-url').hide();
+	$('#attach-url').val(''); //Clear the url
+	$('#attach-url').show();
+	$('#attach-url').parent().show(); //Show the label
+	
+	marker = $('<span />').insertBefore('#attach-url');
+	$('#attach-url').detach().attr('type', 'text').insertAfter(marker);
+	marker.remove();
+}
+
+function uploadViaLocal(){
+	$('img.cancel-url').hide();
+	$('#attach-url').val(''); //Clear the url
+	$('.use-url').show();
+	$('#attach-local').show();
+	$('#attach-local').parent().show(); //Hide the label
+	
+	$('#attach-url').hide();
+	$('#attach-url').parent().hide(); //Hide the label
+}
+</script>

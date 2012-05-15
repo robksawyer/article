@@ -41,14 +41,81 @@ class WorksController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Work->create();
 			
-			//Check to see if an artist name was added.
-			debug($this->request->data);
-			
 			//Save the upload
+			$this->processUpload();
+			
+			if ($this->Work->save($this->request->data)) {
+				$this->Session->setFlash(__('The work has been saved'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The work could not be saved. Please, try again.'));
+				//Delete the upload
+				if(!empty($this->request->data['Work']['upload_id'])){
+					$upload = $this->Work->Upload->read(null,$this->request->data['Work']['upload_id']);
+					$this->Uploader->delete($upload['Upload']['path']);
+					//Delete the record
+					$this->Work->Upload->id = $this->request->data['Work']['upload_id'];
+					if($this->Work->Upload->delete()){
+						//Delete success
+					}else{
+						//Delete fail
+					}
+				}
+			}
+		}
+		$artists = $this->Work->Artist->find('list');
+		$publications = $this->Work->Publication->find('list');
+		$this->set(compact('artists', 'publications'));
+	}
+	
+	/**
+	 * This method handles processing the upload
+	 *
+	 * @return bool
+	 * @author Rob Sawyer
+	 **/
+	public function processUpload() {
+		//http://milesj.me/code/cakephp/uploader
+		$this->Uploader = new Uploader(array(
+							'tempDir' => TMP,
+							'baseDir'	=> WWW_ROOT,
+							'uploadDir'	=> 'files/uploads/works/',
+							'maxNameLength' => 200
+							));
+							
+		//Check to see if a upload URL was added
+		if(!empty($this->request->data['Upload']['url'])){
+			//Delete the old file if it exists
+			if(!empty($this->request->data['Work']['upload_id'])){
+				$upload = $this->Work->Upload->read(null,$this->request->data['Work']['upload_id']);
+				$this->Uploader->delete($upload['Upload']['path']);
+				//Delete the record
+				$this->Work->Upload->id = $this->request->data['Work']['upload_id'];
+				if($this->Work->Upload->delete()){
+					//Delete success
+				}else{
+					//Delete fail
+				}
+			}
+			
+			//Upload the file via a url
+			//Save the file from the url
+			$target_file_path = $this->request->data['Upload']['url'];
+			$filename = basename($target_file_path);
+			$this->request->data['Upload'] = $this->Uploader->importRemote($target_file_path,array('name'=>$filename));
+			$this->Work->Upload->create();
+			if($this->Work->Upload->save($this->request->data)){
+				//Upload saved to DB
+				$uploadID = $this->Work->Upload->getLastInsertID();
+				$uploadData = $this->Work->Upload->read(null,$uploadID);
+				$this->set('upload',$uploadData);
+				$this->request->data['Work']['upload_id'] = $uploadData['Upload']['id']; //Set the upload id
+			}
+			unset($this->request->data['Upload']['url']);
+		}else{
 			if(empty($this->request->data['Work']['upload_id']) || $this->request->data['Upload']['fileName']['size'] > 0){
 				//Delete the old file if it exists
 				if(!empty($this->request->data['Work']['upload_id'])){
-					$this->Uploader = new Uploader();
 					$upload = $this->Work->Upload->read(null,$this->request->data['Work']['upload_id']);
 					$this->Uploader->delete($upload['Upload']['path']);
 					//Delete the record
@@ -69,20 +136,7 @@ class WorksController extends AppController {
 				$uploadData = $this->Work->Upload->read(null,$this->request->data['Work']['upload_id']);
 				$this->set('upload',$uploadData);
 			}
-			
-			//Check to see if an artist name was added.
-			debug($this->request->data);
-			
-			/*if ($this->Work->save($this->request->data)) {
-				$this->Session->setFlash(__('The work has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The work could not be saved. Please, try again.'));
-			}*/
 		}
-		$artists = $this->Work->Artist->find('list');
-		$publications = $this->Work->Publication->find('list');
-		$this->set(compact('artists', 'publications'));
 	}
 	
 	/**

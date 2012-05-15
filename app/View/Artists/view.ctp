@@ -36,9 +36,9 @@
 			<?php echo h($artist['Artist']['country']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Zipcode'); ?></dt>
+		<dt><?php echo __('Zip'); ?></dt>
 		<dd>
-			<?php echo h($artist['Artist']['zipcode']); ?>
+			<?php echo h($artist['Artist']['zip']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Created'); ?></dt>
