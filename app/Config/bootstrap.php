@@ -129,3 +129,25 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
+//Upload component
+CakePlugin::load(array('Uploader','Utils','Geography')); //'AddressFinder'
+
+//https://github.com/stefanomanfredini/AddressFinder-Helper---Plugin-for-cakephp-2
+/*$config['AddressFinder'] = array(
+		//map settings
+		'height' => '300px',
+		'width' => '450px',
+		'default' => array('lat' => '44.8378942', 'lon' => '11.6204396'),
+		//form fields settings
+		'modelName' => 'Place',
+		'fields' => array('lat' => 'lat', 'lon' => 'lon', 'address' => 'address'), //match your db table fields when used for insert/update
+		'latlonFieldsVisibility' => 'readonly', //'normal', 'readonly' or 'hidden' <- if hidden check your Security settings
+		//rendering behaviour setting                
+		'includeGoogleMapsScript' => true,
+		'includeJQuery' => false,  //usually already included
+		'renderFields' => false,  // render only the map and script, 
+		                         // the form already has the required fields. If true, render the fields too
+		'preventSubmit' => true    // no submit on empty lat/lon;
+);
+  
+Configure::write('AddressFinder',$config['AddressFinder']);*/

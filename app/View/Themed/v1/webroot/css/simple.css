@@ -1,0 +1,12 @@
+input[type="text"].zip{
+	width: 150px !important;
+}
+input[type="text"].city{
+	width: 350px !important;
+}
+input[type="text"].state{
+	width: 150px !important;
+}
+input[type="text"].phone{
+	width: 250px !important;
+}

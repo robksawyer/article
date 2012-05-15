@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class PublicationsController extends AppController {
 
+	var $helpers = array('Geography.Geography');
+	public $components = array('Utils.Utils');
 
 /**
  * index method
@@ -39,6 +41,9 @@ class PublicationsController extends AppController {
  */
 	public function add() {
 		if ($this->request->is('post')) {
+			//Clean up the URL
+			$this->request->data['Publication']['url'] = $this->Utils->addHttp($this->request->data['Publication']['url']);
+			
 			$this->Publication->create();
 			if ($this->Publication->save($this->request->data)) {
 				$this->Session->setFlash(__('The publication has been saved'));

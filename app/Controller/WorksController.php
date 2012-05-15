@@ -7,7 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class WorksController extends AppController {
 
-
+	public $helpers = array('AddressFinder.AddressFinder');
+	
 /**
  * index method
  *
@@ -40,12 +41,16 @@ class WorksController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Work->create();
-			if ($this->Work->save($this->request->data)) {
+			
+			//Check to see if an artist name was added.
+			debug($this->request->data);
+			
+			/*if ($this->Work->save($this->request->data)) {
 				$this->Session->setFlash(__('The work has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The work could not be saved. Please, try again.'));
-			}
+			}*/
 		}
 		$artists = $this->Work->Artist->find('list');
 		$publications = $this->Work->Publication->find('list');
