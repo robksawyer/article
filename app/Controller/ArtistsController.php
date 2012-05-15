@@ -58,10 +58,10 @@ class ArtistsController extends AppController {
 			}
 			
 			//Clear the @ sign if nothing else was entered.
-			$this->request->data['Artist']['twitter'] = trim($this->request->data['Artist']['twitter']);
+			/*$this->request->data['Artist']['twitter'] = trim($this->request->data['Artist']['twitter']);
 			if(strlen($this->request->data['Artist']['twitter']) == 1){
 				$this->request->data['Artist']['twitter'] = '';
-			}
+			}*/
 			$this->Artist->create();
 			if ($this->Artist->save($this->request->data)) {
 				$this->Session->setFlash(__('The artist has been saved'));

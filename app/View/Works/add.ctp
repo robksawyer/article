@@ -4,11 +4,17 @@
 		<legend><?php echo __('Add Work'); ?></legend>
 	<?php
 		echo $this->Form->input('name');
-		echo $this->Form->input('artist_id',array('after'=>'<div class="after">Don\'t see the artist, <a href="/artists/add">add him/her</a>.</div>'));
+		echo $this->Form->input('artist_id',array('empty'=>'-- Select an Artist --','after'=>'<div class="after">Don\'t see the artist, <a href="/artists/add">add him/her</a>.</div>'));
 		echo $this->Form->input('media_type',array('after'=>'<div class="after">Ex. Chalk, Acrylic, Oil, Crayon, Conté, Pen and ink, etc.</div>'));
 		echo $this->Form->input('media_base',array('after'=>'<div class="after">Ex. Canvas, Metal, Paper, Wood etc.</div>'));
 		echo $this->Form->input('publication_id',array('empty' => '-- Select a Publication --','after'=>'<div class="after">Don\'t see the publication, <a href="/publications/add">add it</a>.</div>'));
-		echo $this->Form->input('Upload.fileName', array('type' => 'file','label'=>false,'before'=>'<div class="before">Add an image of the work.</div>'));
+		if(!empty($upload)){
+			echo $this->Form->input('upload_id',array('type'=>'hidden'));
+			echo $this->Html->image($upload['Upload']['path'],array('width'=>'150px'));
+			echo $this->Form->input('Upload.fileName', array('type' => 'file','label'=>false,'before'=>'<div class="before">If you\'d like to change the image. Pick a new one below.</div>'));
+		}else{
+			echo $this->Form->input('Upload.fileName', array('type' => 'file','label'=>false,'before'=>'<div class="before">Add an image of the work.</div>'));
+		}
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit'));?>

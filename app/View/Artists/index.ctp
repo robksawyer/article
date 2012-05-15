@@ -2,14 +2,21 @@
 	<h2><?php echo __('Artists');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
+			<th><?php echo $this->Paginator->sort('type');?></th>
+			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th><?php echo $this->Paginator->sort('fullname');?></th>
+			<th><?php echo $this->Paginator->sort('url');?></th>
+			<th><?php echo $this->Paginator->sort('linkin_url');?></th>
+			<th><?php echo $this->Paginator->sort('twitter');?></th>
 			<th><?php echo $this->Paginator->sort('email');?></th>
 			<th><?php echo $this->Paginator->sort('phone');?></th>
+			<th><?php echo $this->Paginator->sort('employer');?></th>
+			<th><?php echo $this->Paginator->sort('employment_status');?></th>
+			
 			<th><?php echo $this->Paginator->sort('city');?></th>
 			<th><?php echo $this->Paginator->sort('state');?></th>
 			<th><?php echo $this->Paginator->sort('country');?></th>
-			<th><?php echo $this->Paginator->sort('zipcode');?></th>
+			<th><?php echo $this->Paginator->sort('zip');?></th>
 			<th><?php echo $this->Paginator->sort('created');?></th>
 			<th><?php echo $this->Paginator->sort('modified');?></th>
 			<th class="actions"><?php echo __('Actions');?></th>
@@ -17,14 +24,24 @@
 	<?php
 	foreach ($artists as $artist): ?>
 	<tr>
-		<td><?php echo h($artist['Artist']['id']); ?>&nbsp;</td>
+		<td><?php echo h($artist['Artist']['type']); ?>&nbsp;</td>
+		<td><?php echo h($artist['Artist']['title']); ?>&nbsp;</td>
 		<td><?php echo h($artist['Artist']['fullname']); ?>&nbsp;</td>
-		<td><?php echo h($artist['Artist']['email']); ?>&nbsp;</td>
+		<td><?php echo $this->Text->autoLinkUrls($artist['Artist']['url'],array('target'=>'_blank')); ?>&nbsp;</td>
+		<td><?php echo $this->Text->autoLinkUrls($artist['Artist']['linkedin_url'],array('target'=>'_blank')); ?>&nbsp;</td>
+		<td><?php 
+			if(!empty($artist['Artist']['twitter'])){
+				echo $this->Html->link('http://twitter.com/#!/'.$artist['Artist']['twitter'],array('target'=>'_blank')); 
+			}
+		?>&nbsp;</td>
+		<td><?php echo $this->Text->autoLinkEmails($artist['Artist']['email']); ?>&nbsp;</td>
 		<td><?php echo h($artist['Artist']['phone']); ?>&nbsp;</td>
+		<td><?php echo h($artist['Artist']['employer']); ?>&nbsp;</td>
+		<td><?php echo h($artist['Artist']['employment_status']); ?>&nbsp;</td>
 		<td><?php echo h($artist['Artist']['city']); ?>&nbsp;</td>
 		<td><?php echo h($artist['Artist']['state']); ?>&nbsp;</td>
 		<td><?php echo h($artist['Artist']['country']); ?>&nbsp;</td>
-		<td><?php echo h($artist['Artist']['zipcode']); ?>&nbsp;</td>
+		<td><?php echo h($artist['Artist']['zip']); ?>&nbsp;</td>
 		<td><?php echo h($artist['Artist']['created']); ?>&nbsp;</td>
 		<td><?php echo h($artist['Artist']['modified']); ?>&nbsp;</td>
 		<td class="actions">

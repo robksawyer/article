@@ -40,6 +40,27 @@ class Work extends AppModel {
 		)
 	);
 	
+	public $actsAs = array(
+		'Uploader.FileValidation' => array(
+			'fileName' => array(
+						'required'	=> array(
+								'value' => false,
+								'error' => 'You must select a file first'
+						),
+						'extension'	=> array(
+								'value' => array(
+									'jpeg','jpg','png','tif','tiff','bmp','gif'
+								),
+								'error' => 'You cannot upload this type of file.'
+						)
+						/*'filesize' => array(
+										'value' => 5242880,
+										'error' => 'This file is too large or small.'
+						)*/
+					)
+		)
+	);
+	
 /**
  * belongsTo associations
  *

@@ -23,14 +23,12 @@ class Upload extends AppModel {
 		'Uploader.FileValidation' => array(
 			'fileName' => array(
 						'required'	=> array(
-										'value' => true,
-										'error' => 'You must select a file first'
+								'value' => false,
+								'error' => 'You must select a file first'
 						),
 						'extension'	=> array(
 								'value' => array(
-									'aif','aifc','aiff','au','kar','mid','midi','mp2','mp3',
-									'mpga','ra','ram','rm','rpm','snd','tsi','wav','m4a','m4b','m4p',
-									'wma','gz','gtar','z','tgz','zip','rar','rev','tar','7z'
+									'jpeg','jpg','png','tif','tiff','bmp','gif'
 								),
 								'error' => 'You cannot upload this type of file.'
 						)

@@ -7,7 +7,7 @@
 		echo $this->Form->input('type',array('label'=>'Type of artist','after'=>'Ex. Digital, Illustrator, etc.'));
 		echo $this->Form->input('url',array('label'=>'Website URL'));
 		echo $this->Form->input('linkedin_url',array('label'=>'<a href="http://www.linkedin.com" target="_blank">LinkedIn</a> URL'));
-		echo $this->Form->input('twitter',array('label'=>'Twitter Name','value'=>'@'));
+		echo $this->Form->input('twitter',array('label'=>'Twitter Name'));
 		echo $this->Form->input('email');
 		echo $this->Form->input('phone');
 	?>
@@ -17,7 +17,7 @@
 	<?php
 		echo $this->Form->input('title',array('label'=>'Job Title'));
 		echo $this->Form->input('employer');
-		echo $this->Form->input('employment_type',array('after'=>'Ex. Freelance, Full-time, etc.'));
+		echo $this->Form->input('employment_status',array('after'=>'Ex. Freelance, Full-time, etc.'));
 	?>
 	</fieldset>
 	<fieldset>

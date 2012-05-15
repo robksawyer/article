@@ -29,13 +29,14 @@ class Artist extends AppModel {
 			)
 		),
 		'email' => array(
-			'required' => false,
 			'isValid' => array(
 				'rule' => 'email',
+				'required' => false,
 				'message' => 'Please enter a valid email address.'
 			),
 			'isUnique' => array(
 				'rule' => array('isUnique','email'),
+				'required' => false,
 				'message' => 'This email is already in use.'
 			)
 		)
